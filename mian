@@ -1,0 +1,54 @@
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+
+public class ChessBoardPanel extends JPanel {
+    private final int CHESS_COUNT = 8;
+    private ChessGridComponent[][] chessGrids;
+
+
+    public ChessBoardPanel(int width, int height) {
+        this.setVisible(true);
+        this.setFocusable(true);
+        this.setLayout(null);
+        this.setBackground(Color.PINK);
+        int length = Math.min(width, height);
+        this.setSize(length, length);
+        ChessGridComponent.gridSize = length / CHESS_COUNT;
+        ChessGridComponent.chessSize = (int) (ChessGridComponent.gridSize * 0.8);
+        System.out.printf("width = %d height = %d gridSize = %d chessSize = %d\n",
+                width, height, ChessGridComponent.gridSize, ChessGridComponent.chessSize);
+        initialChessGrids();//return empty chessboard
+        initialGame();//add initial four chess
+        initialGamePlace();
+        repaint();
+    }
+
+    public int getCHESS_COUNT() {
+        return CHESS_COUNT;
+    }
+
+    public ChessGridComponent[][] getChessGrids() {
+        return chessGrids;
+    }
+
+    /**
+     * set an empty chessboard
+     */
+
+    public void initialChessGrids() {
+
+        chessGrids = new ChessGridComponent[CHESS_COUNT][CHESS_COUNT];
+        //创建棋盘数组
+        //draw all chess grids
+        for (int i = 0; i < CHESS_COUNT; i++) {
+            for (int j = 0; j < CHESS_COUNT; j++) {
+                //创建一个小格子
+                ChessGridComponent gridComponent = new ChessGridComponent(i, j);
+                //设置小格子的位置
+                gridComponent.setLocation(j * ChessGridComponent.gridSize, i * ChessGridComponent.gridSize);
+                chessGrids[i][j] = gridComponent;//将小格子放入棋盘
+                this.add(chessGrids[i][j]);
+            }
+        }
+    }
